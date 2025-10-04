@@ -41,16 +41,26 @@ function App() {
   //   setTodoItems(newTodoWork);
   // }
 
+
+
+  const handleDeleteItem=(todoItemName)=>{
+    const newTodoItems=todoItems.filter((item)=>item.name!=todoItemName)
+    setTodoItems(newTodoItems);
+    console.log(`Delete ${todoItemName}`);
+
+
+  }
+
   return (
     <center className="todo-container mt-5">
     <AppName/>
     <AddToDo onNewItem={handleNewItem}/>
     {todoItems.length ==0 && <WelcomeMessage/>}
-    <TodoItems todoItems={todoItems}></TodoItems>
+    <TodoItems todoItems={todoItems} onDeleteClick={handleDeleteItem}></TodoItems>
     
     </center>
 
   )
 }
 
-export default App
+export default App;
