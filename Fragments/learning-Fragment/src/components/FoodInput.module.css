@@ -1,0 +1,8 @@
+.foodInput{
+  padding: 5px;
+  width:300px;
+  margin: 20px;
+  background-color: beige;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

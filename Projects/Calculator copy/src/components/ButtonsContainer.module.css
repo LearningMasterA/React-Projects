@@ -1,0 +1,16 @@
+.buttonsContainer{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.button{
+  height: 40px;
+  width: 40px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 3px;
+  margin-right: 10px;
+}
