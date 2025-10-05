@@ -3,7 +3,9 @@ import ToDoItem from "./ToDoItem";
 const TodoItems=({todoItems, onDeleteClick})=>{
   return <div>
     {todoItems.map(item =>
+
     <ToDoItem todoName={item.name} 
+    key={item.name}
     todoDate={item.duedate} onDeleteClick={onDeleteClick}
     >
     </ToDoItem>)}
