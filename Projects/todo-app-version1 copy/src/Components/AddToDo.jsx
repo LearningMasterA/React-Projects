@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 
 function AddToDo({onNewItem}) {
 const [todoName,setTodoName]=useState("");
 const [dueDate,setdueDate]=useState("");
+const noOfClicks=useRef(0);
 
 const handleNameChange=(event)=>{
   // setTodoName(todoName);
 
   setTodoName(event.target.value);
+  noOfClicks.current+=1;
 }
 
 const handleDateChange=(event)=>{
   // setdueDate(dueDate);
   setdueDate(event.target.value);
+  console.log(`No of clicks: ${noOfClicks.current}`);
 }
 
 
-const handleAddButtonClick=()=>{
+const handleAddButtonClick=(event)=>{
+  event.preventDefault();
   onNewItem(todoName,dueDate);
   setTodoName("");
   setdueDate("");
+
+
 }
   return (
     <div className="container text-center">
-      <div className="row mt-5">
+      <form onSubmit={handleAddButtonClick} className="row mt-5">
         <div className="col-6">
           <input type="text" placeholder="Enter todo work here"
           value={todoName}
@@ -39,7 +45,7 @@ const handleAddButtonClick=()=>{
           />
         </div>
         <div className="col-2">
-          <button type="button" className="btn btn-primary" 
+          <button type="submit" className="btn btn-primary" 
           onClick={()=>{
             // onNewItem(todoName,dueDate);
             handleAddButtonClick();
@@ -47,7 +53,8 @@ const handleAddButtonClick=()=>{
             <IoAddCircleOutline></IoAddCircleOutline>
             </button>
         </div>
-      </div>
+        </form>
+      
     </div>  
 
   )
