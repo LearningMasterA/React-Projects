@@ -1,22 +1,23 @@
 import ToDoItem from "./ToDoItem";
-import {ToDoItemsContext} from "../store/todo-items-store";
+import {TodoItemsContext} from "../store/todo-items-store";
 import { useContext } from "react";
 
-const TodoItems=({todoItems, onDeleteClick})=>{
-  const todoItemsFromContext=useContext({ToDoItemsContext});
-  console.log(`items from context ${todoItemsFromContext}`);
+const TodoItems=()=>{
+  const {todoItems,deleteItem}=useContext(TodoItemsContext);
+  // const todoItems=contextObject.todoItems;
+  // console.log(todoItemsFromContext);
   return <div>
-    {todoItems.map(item =>(
-    <ToDoItem todoName={item.name} 
-    key={item.name}
+    {todoItems.map(
+      (item) =>
+        (
+    <ToDoItem 
+    todoName={item.name} 
     todoDate={item.duedate} 
-    onDeleteClick={onDeleteClick}
-    >
-    </ToDoItem>)
+    onDeleteClick={deleteItem}
+    ></ToDoItem>
+  )
     )
     }
-
- </div>
+  </div>
 }
-
 export default TodoItems;
