@@ -1,9 +1,9 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer,useState, useEffect } from "react";
 
 export const PostList=createContext({
   postList:[],
   addPost:()=>{},
-  addInitialPosts:()=>{},
+  fetching:false,
   deletePost:()=>{}
 });
 
@@ -26,17 +26,12 @@ const PostListProvider=({children})=>{
   const [postList,dispatchPostList]=useReducer(
     postListReducer,[]
   );
-  const addPost=(userId,postTitle,postBody,reactions,tags)=>{
+  
+
+  const addPost=(post)=>{
     dispatchPostList({
       type:'ADD_POST',
-      payload:{
-        id:Date.now(),
-        title:postTitle,
-        body:postBody,
-        reactions,
-        userId,
-        tags
-      }
+      payload:post
     })
 
   }
@@ -61,10 +56,27 @@ const PostListProvider=({children})=>{
     }
     )
   }
+  const[fetching,setFetching]=useState(false);
+  useEffect(()=> {
+    setFetching(true);
+    const controller=new AbortController();
+    const signal=controller.signal;
+    fetch('https://dummyjson.com/posts',{ signal })
+        .then(res => res.json())
+        .then(data=>{
+        addInitialPosts(data.posts);
+        setFetching(false);
+        })
+        return ()=>{
+          //console.log("Cleaning Up");
+          controller.abort();
+        }
+        },[]);
+
   return <PostList.Provider value={{
     postList,
   addPost,
-  addInitialPosts,
+  fetching,
   deletePost
   }}>
     {children}
